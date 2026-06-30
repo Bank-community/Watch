@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHHUTUP™ Luxury Watches | Time Speaks. You Don't Have To.</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover SHHUTUP Premium Luxury Watches. Minimal, modern, and ultra-premium timepieces tailored for fashion enthusiasts. Fast loading, secure, and instant WhatsApp ordering.">
+    <meta name="keywords" content="Luxury Watch, Premium Watch, Designer Watch, Fashion Watch, Luxury Timepiece, Minimal Watch, Modern Watch, SHHUTUP">
+    <meta name="theme-color" content="#030303">
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 1. Cinematic Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <h1 class="brand-logo-preload" id="preload-logo">SHHUTUP</h1>
+            <div class="preload-counter" id="preload-counter">0%</div>
+            <div class="preload-bar-track">
+                <div class="preload-bar" id="preload-bar"></div>
+            </div>
+            <p class="tagline-preload">Silence Is Luxury</p>
+        </div>
+    </div>
+
+    <!-- Social Proof Toast -->
+    <div id="recent-order-toast" class="recent-order-toast">
+        <div class="toast-img-placeholder">⌚</div>
+        <div class="toast-info">
+            <p class="toast-title">Someone recently ordered</p>
+            <p id="toast-product-name" class="toast-product">Chronograph Blue Eclipse</p>
+            <p class="toast-time">2 minutes ago from Mumbai</p>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">SHHUTUP</a>
+            
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#collections" class="nav-link">Collections</a></li>
+                <li><a href="#products" class="nav-link">Store</a></li>
+                <li><a href="#why-us" class="nav-link">Experience</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button id="search-toggle-btn" class="nav-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="wishlist-toggle-btn" class="nav-btn" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="badge" id="wishlist-count">0</span></button>
+                <button id="cart-toggle-btn" class="nav-btn cart-icon-btn" aria-label="Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="badge bg-blue" id="cart-count">0</span>
+                </button>
+                <!-- Mobile Hamburger -->
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+        <!-- Search Overlay -->
+        <div id="search-overlay" class="search-overlay">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--text-dim);"></i>
+                <input type="text" id="search-input" placeholder="Search premium timepieces...">
+                <button id="search-close" class="search-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu">
+        <a href="#hero" class="mobile-nav-link" data-menu-link>Home</a>
+        <a href="#collections" class="mobile-nav-link" data-menu-link>Collections</a>
+        <a href="#products" class="mobile-nav-link" data-menu-link>Store</a>
+        <a href="#why-us" class="mobile-nav-link" data-menu-link>Experience</a>
+        <a href="#faq" class="mobile-nav-link" data-menu-link>FAQ</a>
+    </div>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="mouse-glow" id="mouse-glow"></div>
+        <div class="hero-container">
+            <div class="hero-text-content">
+                <span class="hero-sub">THE NEW ERA OF TIMEPIECES</span>
+                <h1 class="hero-heading">TIME IS YOUR<br><span class="text-glow-blue">IDENTITY</span></h1>
+                <p class="hero-tagline">Time Speaks. You Don't Have To.</p>
+                <div class="hero-cta-group">
+                    <a href="#products" class="btn btn-primary">Explore Collection</a>
+                    <a href="#why-us" class="btn btn-secondary">Luxury Experience</a>
+                </div>
+                <!-- Live Counter -->
+                <div class="live-counter">
+                    <span class="pulse-dot"></span>
+                    <span class="counter-text"><strong id="live-visitors">42</strong> enthusiasts viewing right now</span>
+                </div>
+            </div>
+            
+            <div class="hero-visual-content" id="hero-3d-container">
+                <div class="aurora-glow"></div>
+                <div class="luxury-pedestal"></div>
+                <div class="floating-watch-wrapper" id="hero-watch-wrapper">
+                    <img src="images/hero-watch.jpg" alt="SHHUTUP Luxury Floating Watch" class="floating-watch" id="hero-watch" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600'; this.style.opacity='0.2';">
+                </div>
+                <div class="glass-tag tag-left">SAPPHIRE CRYSTAL</div>
+                <div class="glass-tag tag-right">SWISS PRECISION</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Featured Collection Tabs -->
+    <section id="collections" class="collections-section">
+        <div class="section-header reveal">
+            <span class="section-tag">CURATED DESIGN</span>
+            <h2 class="section-title">THE LUXURY COLLECTIONS</h2>
+        </div>
+        
+        <div class="collection-tabs reveal reveal-delay-1">
+            <button class="tab-btn active" data-filter="all">All Masterpieces</button>
+            <button class="tab-btn" data-filter="Blue Collection">Blue Edition</button>
+            <button class="tab-btn" data-filter="Premium Collection">Premium Gold</button>
+            <button class="tab-btn" data-filter="Limited Edition">Limited Stealth</button>
+        </div>
+    </section>
+
+    <!-- 3. Dynamic Product Section -->
+    <section id="products" class="products-section">
+        <div class="products-container">
+            <div id="product-grid" class="product-grid">
+                <!-- Skeleton loading states -->
+                <div class="product-skeleton-card"></div>
+                <div class="product-skeleton-card"></div>
+                <div class="product-skeleton-card"></div>
+                <div class="product-skeleton-card"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Why SHHUTUP Section -->
+    <section id="why-us" class="why-section">
+        <div class="section-header reveal">
+            <span class="section-tag">CRAFTSMANSHIP</span>
+            <h2 class="section-title">WHY SHHUTUP?</h2>
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card reveal reveal-delay-1">
+                <div class="benefit-icon"><i class="fa-solid fa-gem"></i></div>
+                <h3>Luxury Material</h3>
+                <p>Forged with architectural 316L stainless steel and scratch-resistant sapphire crystal glass shielding.</p>
+            </div>
+            <div class="benefit-card reveal reveal-delay-2">
+                <div class="benefit-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                <h3>Minimal Design</h3>
+                <p>Pure, bold, structural minimalism that makes an absolute statement without shouting.</p>
+            </div>
+            <div class="benefit-card reveal reveal-delay-3">
+                <div class="benefit-icon"><i class="fa-solid fa-box-open"></i></div>
+                <h3>Premium Unboxing</h3>
+                <p>Comes packaged in a textured matte-black velvet interior box ready for luxury gifting.</p>
+            </div>
+            <div class="benefit-card reveal reveal-delay-4">
+                <div class="benefit-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <h3>Fast Delivery</h3>
+                <p>Insured, expedited priority shipping straight to your doorstep across India completely free.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Lifestyle Gallery -->
+     <section class="gallery-section">
+        <div class="section-header reveal">
+            <span class="section-tag">LIFESTYLE</span>
+            <h2 class="section-title">THE AESTHETIC</h2>
+        </div>
+        <div class="gallery-grid" id="dynamic-gallery-grid">
+            <div class="gallery-item large reveal">
+                <div class="gallery-overlay"><span>SILENCE IS LUXURY</span></div>
+                <div class="gallery-bg-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(3,3,3,0.85)), url('https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=800') center/cover;"></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-1">
+                <div class="gallery-overlay"><span>THE BLUE CHASSIS</span></div>
+                <div class="gallery-bg-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(3,3,3,0.85)), url('https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=500') center/cover;"></div>
+            </div>
+            <div class="gallery-item reveal reveal-delay-2">
+                <div class="gallery-overlay"><span>CRAFTED GOLD</span></div>
+                <div class="gallery-bg-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(3,3,3,0.85)), url('https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=500') center/cover;"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 6. Customer Reviews -->
+    <section class="reviews-section">
+        <div class="section-header reveal">
+            <span class="section-tag">SOCIAL PROOF</span>
+            <h2 class="section-title">THE INNER CIRCLE VERDICT</h2>
+        </div>
+        <div class="reviews-container" id="reviews-carousel">
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"The premium feel of the matte carbon casing blew me away. It feels heavier and sleeker than my watches that cost 5x more. Instant complement generator."</p>
+                <div class="review-user">
+                    <span class="user-name">Rohan Sharma</span>
+                    <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Ordering via WhatsApp was seamless. Clicked the button, sent the message, and had my tracking link within 2 hours. Exceptional customer handling!"</p>
+                <div class="review-user">
+                    <span class="user-name">Aanya Verma</span>
+                    <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"The unboxing experience was on another level. The velvet box, the presentation — it felt like opening a Rolex. My friends couldn't believe the price."</p>
+                <div class="review-user">
+                    <span class="user-name">Vikram Patel</span>
+                    <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Bought the Blue Eclipse as a gift for my husband. The sapphire crystal glass is stunning. The weight feels premium. He hasn't taken it off since."</p>
+                <div class="review-user">
+                    <span class="user-name">Priya Nair</span>
+                    <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FAQ Accordion -->
+    <section id="faq" class="faq-section">
+        <div class="section-header reveal">
+            <span class="section-tag">CLARITY</span>
+            <h2 class="section-title">FREQUENTLY ASKED</h2>
+        </div>
+        <div class="faq-accordion reveal">
+            <div class="faq-item">
+                <button class="faq-question">How do I place an order? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>We use a high-speed WhatsApp checkout process. Simply add your favorite luxury watch to the cart, click "Order on WhatsApp", and your automated pre-filled order detail will be generated to chat with our executive instantly.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What is the delivery timeline and cost? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>We offer 100% Free Priority Insured Shipping across India. Delivery takes 3-5 business days depending upon your location.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is there a product warranty? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>Yes, every SHHUTUP luxury timepiece is backed by a 1-Year Comprehensive International Movement Warranty card included inside the premium box packaging.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Can I return or exchange? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>We offer a 7-day hassle-free return policy. If you're not satisfied, simply contact us on WhatsApp and we'll arrange a pickup at no extra cost.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are these genuine luxury watches? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                    <p>Every SHHUTUP timepiece is crafted with genuine 316L stainless steel, sapphire crystal glass, and premium Japanese/Swiss movements. Each watch comes with an authenticity certificate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container reveal">
+            <h2>JOIN THE INNER CIRCLE</h2>
+            <p>Be the first to know about new drops, exclusive collections, and VIP-only offers.</p>
+            <form class="newsletter-form" id="newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">SUBSCRIBE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 9. Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2>SHHUTUP</h2>
+                <p>Time Speaks. You Don't Have To.</p>
+                             <div class="social-links">
+                    <a href="#" id="link-instagram" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" id="link-facebook" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" id="link-youtube" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" id="link-pinterest" aria-label="Pinterest" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+                    <a href="#" id="link-mail" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+
+            </div>
+            <div class="footer-links">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="#products">Store Front</a></li>
+                    <li><a href="#why-us">Brand Experience</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Warranty & Returns</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SHHUTUP Luxury Timepieces. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 10. Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-drawer-overlay" id="cart-overlay"></div>
+        <div class="cart-content-panel">
+            <div class="cart-header">
+                <h2>YOUR SELECTIONS (<span id="cart-items-count">0</span>)</h2>
+                <button id="cart-close-btn" class="cart-close-btn" aria-label="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div id="cart-items-list" class="cart-items-list">
+                <div class="empty-cart-message">Your luxury tray is empty.</div>
+            </div>
+            
+            <div class="cart-footer">
+                <div class="cart-subtotal-row">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal-price" class="font-montserrat">₹0</span>
+                </div>
+                <div class="coupon-section">
+                    <input type="text" id="coupon-code" placeholder="ENTER VIP COUPON">
+                    <button id="apply-coupon">APPLY</button>
+                </div>
+                <p class="shipping-note"><i class="fa-solid fa-truck"></i> Free Luxury Insured Shipping Applied</p>
+                <button id="whatsapp-checkout-btn" class="btn btn-whatsapp btn-block">
+                    <i class="fa-brands fa-whatsapp"></i> ORDER ON WHATSAPP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11. Wishlist Drawer -->
+    <div id="wishlist-drawer" class="cart-drawer">
+        <div class="cart-drawer-overlay" id="wishlist-overlay"></div>
+        <div class="cart-content-panel">
+            <div class="cart-header">
+                <h2>YOUR WISHLIST (<span id="wishlist-drawer-count">0</span>)</h2>
+                <button id="wishlist-close-btn" class="cart-close-btn" aria-label="Close Wishlist"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="wishlist-items-list" class="cart-items-list">
+                <div class="empty-cart-message">Your wishlist is empty.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+       <a href="#" id="floating-whatsapp" class="whatsapp-floating-btn" aria-label="WhatsApp Support">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    <!-- Sticky Mobile Bottom -->
+    <div class="sticky-mobile-action">
+        <a href="#products" class="btn btn-primary btn-block">BROWSE COLLECTION</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/whatsapp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script type="module" src="js/landing.js"></script>
+</body>
+</html>
