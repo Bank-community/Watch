@@ -1471,6 +1471,7 @@ section {
 .gallery-item.large {
     grid-row: span 2;
     height: 100%;
+    min-height: 600px;
 }
 
 .gallery-bg-placeholder {
@@ -1480,6 +1481,7 @@ section {
     background-position: center;
     transition: transform 0.8s var(--ease-out-expo);
 }
+
 
 .gallery-item:hover .gallery-bg-placeholder {
     transform: scale(1.05);
@@ -2612,12 +2614,17 @@ section {
         grid-template-columns: 1fr;
     }
 
-    .gallery-item,
+     .gallery-item,
     .gallery-item.large {
-        grid-column: span 1;
+        grid-column: 1 / -1; 
         grid-row: span 1;
-        height: 250px;
+        width: 100%; 
+        height: auto;
+        min-height: unset; /* <-- यह सबसे जरूरी है! PC की 600px हाइट को यहाँ कैंसिल किया गया है */
+        aspect-ratio: 4 / 5; 
+        overflow: hidden;
     }
+
 
     .reviews-container {
         padding: 0 1rem;

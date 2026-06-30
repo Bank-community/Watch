@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHHUTUP™ | Delivery Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Full Screen & Clean Body */
+        body { background: var(--bg-main); color: var(--text-primary); }
+
+        /* Premium 3-Step Progress Bar */
+        .checkout-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 110px 20px 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #111; /* Inactive Dark */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            color: #555;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        /* Active & Completed States */
+        .step.active .step-icon, .step.completed .step-icon {
+            background: var(--luxury-blue);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(27, 77, 255, 0.4);
+        }
+
+        .step-label {
+            font-family: var(--font-product);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        .step.active .step-label, .step.completed .step-label {
+            color: var(--text-primary);
+        }
+
+        /* Connecting Lines */
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: #222;
+            margin-bottom: 28px; /* Alignment fix for labels */
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .step-line.active {
+            background: var(--luxury-blue);
+            box-shadow: 0 0 10px rgba(27, 77, 255, 0.4);
+        }
+
+               /* Full Screen Form Container */
+        .checkout-section {
+            padding: 0 clamp(1.5rem, 5vw, 5%) 4rem;
+            max-width: 650px; /* PC के लिए थोड़ी कम चौड़ाई ताकि ज्यादा प्रीमियम लगे */
+            margin: 0 auto;
+        }
+
+        .checkout-box {
+            background: transparent; 
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* PC (Desktop) Specific Styling */
+        @media (min-width: 768px) {
+            .checkout-section {
+                padding-top: 1rem;
+            }
+            .checkout-box {
+                background: #0a0a0a; /* PC पर हल्का डार्क कार्ड लुक */
+                border: 1px solid #1a1a1a;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                padding: 3rem;
+            }
+        }
+
+
+        /* Delivery Details Header */
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.2rem;
+        }
+
+        .form-header i {
+            color: var(--luxury-blue);
+            font-size: 1.6rem;
+        }
+
+        .form-header h2 {
+            font-family: var(--font-product);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        /* Input Fields Premium Styling */
+        .form-group { margin-bottom: 1.8rem; position: relative; }
+        
+        .form-group label {
+            display: block;
+            font-family: var(--font-product);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .form-group label span {
+            color: var(--danger); /* Red Asterisk */
+            margin-left: 3px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: #101010; /* Premium Dark Background */
+            border: 1px solid #262626;
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--luxury-blue);
+            background: #141414;
+            box-shadow: 0 0 0 3px rgba(27, 77, 255, 0.1);
+        }
+
+        .form-control:read-only {
+            background: rgba(255,255,255,0.02);
+            color: var(--text-dim);
+            cursor: not-allowed;
+            border-color: #1a1a1a;
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        
+        /* API Messages */
+        .api-loader { position: absolute; right: 20px; top: 52px; color: var(--luxury-blue); display: none; }
+        .api-status { font-size: 0.8rem; margin-top: 10px; display: block; font-weight: 500;}
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-muted { color: var(--text-muted); }
+
+        /* Mobile Optimizations */
+        @media(max-width: 600px) { 
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .checkout-progress { padding: 90px 10px 30px; gap: 8px;}
+            .step-icon { width: 48px; height: 48px; font-size: 1.1rem;}
+            .step-label { font-size: 0.65rem; }
+            .checkout-section { padding: 0 1.2rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">SHHUTUP</a>
+            <button class="nav-btn" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+    </nav>
+
+    <div class="checkout-progress">
+        <div class="step completed">
+            <div class="step-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+            <span class="step-label">CART</span>
+        </div>
+        
+        <div class="step-line active"></div>
+        
+        <div class="step active">
+            <div class="step-icon"><i class="fa-solid fa-user"></i></div>
+            <span class="step-label">DETAILS</span>
+        </div>
+        
+        <div class="step-line"></div>
+        
+        <div class="step">
+            <div class="step-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <span class="step-label">CONFIRM</span>
+        </div>
+    </div>
+
+    <section class="checkout-section">
+        <div class="checkout-box">
+            
+            <div class="form-header">
+                <i class="fa-solid fa-user-pen"></i>
+                <h2>DELIVERY DETAILS</h2>
+            </div>
+
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Full Name <span>*</span></label>
+                    <input type="text" id="c-name" class="form-control" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label>PIN Code <span>*</span></label>
+                    <input type="number" id="c-pincode" class="form-control" required placeholder="e.g. 110001">
+                    <i class="fa-solid fa-circle-notch fa-spin api-loader" id="pin-loader"></i>
+                    <span id="pin-msg" class="api-status"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City / District <span>*</span></label>
+                        <input type="text" id="c-city" class="form-control" required placeholder="Auto-filled or type manually">
+                    </div>
+                    <div class="form-group">
+                        <label>State <span>*</span></label>
+                        <input type="text" id="c-state" class="form-control" required placeholder="Auto-filled or type manually">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Country <span>*</span></label>
+                    <input type="text" id="c-country" class="form-control" value="India" required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Flat, House no., Landmark <span>*</span></label>
+                    <textarea id="c-address" class="form-control" rows="3" required placeholder="Enter complete address details"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-top: 2.5rem;">
+                    <button type="submit" class="btn btn-whatsapp btn-block" style="padding: 1.2rem; font-size: 1.05rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(48, 209, 88, 0.25);">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem; margin-right: 8px;"></i> PROCEED TO WHATSAPP
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="js/checkout.js"></script>
+</body>
+</html>

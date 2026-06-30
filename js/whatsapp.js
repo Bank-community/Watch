@@ -92,63 +92,23 @@
     }
 
     // WhatsApp Checkout
-    const checkoutBtn = document.getElementById('whatsapp-checkout-btn');
+        const checkoutBtn = document.getElementById('whatsapp-checkout-btn');
 
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
             const cart = JSON.parse(localStorage.getItem('shhutup_cart')) || [];
-
             if (cart.length === 0) {
-                // Shake animation for empty cart
                 checkoutBtn.style.animation = 'none';
-                checkoutBtn.offsetHeight; // Trigger reflow
+                checkoutBtn.offsetHeight;
                 checkoutBtn.style.animation = 'shake 0.5s ease';
                 return;
             }
-
-            let total = 0;
-            let message = `🏷️ *SHHUTUP™ — New Order*\n`;
-            message += `━━━━━━━━━━━━━━━━\n\n`;
-
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                message += `${index + 1}. *${item.name}*\n`;
-                message += `   Qty: ${item.quantity} × ${formatINR(item.price)} = ${formatINR(itemTotal)}\n\n`;
-            });
-
-            message += `━━━━━━━━━━━━━━━━\n`;
-            message += `💰 *Subtotal:* ${formatINR(total)}\n`;
-
-            if (appliedCoupon) {
-                let discount = 0;
-                if (appliedCoupon.type === 'percent') {
-                    discount = Math.round(total * appliedCoupon.discount / 100);
-                } else {
-                    discount = appliedCoupon.discount;
-                }
-                message += `🎟️ *Coupon (${appliedCoupon.code}):* -${formatINR(discount)}\n`;
-                total = Math.max(0, total - discount);
-                message += `💎 *Final Total:* ${formatINR(total)}\n`;
-            }
-
-            message += `🚚 *Shipping:* FREE\n`;
-            message += `━━━━━━━━━━━━━━━━\n\n`;
-            
-            const savedEmail = localStorage.getItem('shhutup_user_email');
-            if (savedEmail) {
-                message += `📧 *Customer Email:* ${savedEmail}\n\n`;
-            }
-            
-            message += `📍 Please share your delivery address to proceed.`;
-
-            const encodedMessage = encodeURIComponent(message);
-            const dynamicNumber = getWhatsAppNumber();
-            const whatsappURL = `https://wa.me/${dynamicNumber}?text=${encodedMessage}`;
-
-            window.open(whatsappURL, '_blank');
+            // कूपन को सेव करें ताकि चेकआउट पेज पर इस्तेमाल हो सके
+            localStorage.setItem('shhutup_applied_coupon', JSON.stringify(appliedCoupon));
+            window.location.href = 'checkout.html';
         });
     }
+
 
      // Expose formatINR globally
     window.formatINR = formatINR;

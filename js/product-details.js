@@ -252,8 +252,9 @@ window.toggleWishlistDetails = function(productId) {
 };
 
 window.shareProduct = async function() {
-    const titleElement = document.querySelector('.details-title');
-    const productName = titleElement ? titleElement.innerText : 'SHHUTUP Luxury Timepiece';
+    // अगर प्रोडक्ट लोड नहीं हुआ है तो शेयर नहीं होगा
+    if (!currentProduct) return;
+
     const pageUrl = window.location.href;
     const msgDiv = document.getElementById('action-msg');
     
@@ -265,13 +266,12 @@ window.shareProduct = async function() {
             setTimeout(() => { shareBtn.className = 'fa-solid fa-share-nodes'; }, 2000);
         }
         if (msgDiv) {
-            msgDiv.innerText = '🔗 Link copied to clipboard!';
+            msgDiv.innerText = '🔗 Masterpiece details copied/shared!';
             msgDiv.style.color = 'var(--luxury-blue)';
             setTimeout(() => { msgDiv.innerText = ''; msgDiv.style.color = 'var(--success)'; }, 3000);
         }
     };
 
-    // Error मैसेज दिखाने का फंक्शन
     const showError = () => {
         if (msgDiv) {
             msgDiv.innerText = '❌ Failed to copy link';
@@ -280,24 +280,54 @@ window.shareProduct = async function() {
         }
     };
 
-    // 1. कोशिश: Native Share (सिर्फ HTTPS या असली डोमेन पर काम करेगा)
+    // 🌟 शेयर करने के लिए प्रीमियम टेक्स्ट फॉर्मेट बनाएं (WhatsApp सपोर्ट के साथ)
+    let shareText = `*SHHUTUP™ | ${currentProduct.collection || 'Exclusive Collection'}*\n`;
+    shareText += `━━━━━━━━━━━━━━━━\n`;
+    shareText += `⌚ *${currentProduct.name}*\n\n`;
+    shareText += `💎 *Price:* ${formatINR(currentProduct.price)} `;
+    
+    if (currentProduct.mrp) {
+        shareText += `(~${formatINR(currentProduct.mrp)}~)\n`;
+    } else {
+        shareText += `\n`;
+    }
+
+    if (currentProduct.discount) {
+        shareText += `🏷️ *Discount:* ${currentProduct.discount}\n`;
+    }
+
+    if (currentProduct.description) {
+        // डिस्क्रिप्शन को थोड़ा छोटा करके शेयर करें ताकि मैसेज ज्यादा बड़ा न हो
+        const shortDesc = currentProduct.description.length > 150 
+            ? currentProduct.description.substring(0, 150) + '...' 
+            : currentProduct.description;
+        shareText += `\n📝 *About:* ${shortDesc}\n`;
+    }
+    
+    shareText += `━━━━━━━━━━━━━━━━\n`;
+    shareText += `🛒 *View & Order Here:*\n`;
+
+    // 1. कोशिश: Native Share (मोबाइल पर डायरेक्ट WhatsApp/Instagram शेयर का पॉपअप खोलेगा)
     if (navigator.share && window.isSecureContext) {
         try {
             await navigator.share({
-                title: 'SHHUTUP™ Luxury',
-                text: 'Check out this masterpiece: ' + productName,
+                title: `SHHUTUP™ | ${currentProduct.name}`,
+                text: shareText,
                 url: pageUrl
             });
-            return; // अगर शेयर हो गया तो यही रुक जाओ
+            return;
         } catch (err) {
             console.log('Share canceled', err);
         }
     } 
 
-    // 2. कोशिश: Modern Clipboard API (अगर HTTPS है)
+    // अगर शेयर API सपोर्ट नहीं करता है, तो क्लिपबोर्ड में पूरा टेक्स्ट और लिंक कॉपी कर लें
+    const fullShareContent = shareText + pageUrl;
+
+    // 2. कोशिश: Modern Clipboard API
     if (navigator.clipboard && window.isSecureContext) {
         try {
-            await navigator.clipboard.writeText(pageUrl);
+            await navigator.clipboard.writeText(fullShareContent);
             showSuccess();
             return;
         } catch (err) {
@@ -305,13 +335,13 @@ window.shareProduct = async function() {
         }
     }
 
-    // 3. पक्का जुगाड़ (Fallback): Localhost और HTTP के लिए (जो तुम्हारे काम आएगा)
+    // 3. पक्का जुगाड़ (Fallback): Localhost और पुराने ब्राउज़र के लिए
     try {
-        const tempInput = document.createElement('input');
-        tempInput.value = pageUrl;
+        const tempInput = document.createElement('textarea'); // <textarea> का इस्तेमाल ताकि लाइन ब्रेक (\n) सही से कॉपी हों
+        tempInput.value = fullShareContent;
         document.body.appendChild(tempInput);
         tempInput.select();
-        tempInput.setSelectionRange(0, 99999); // मोबाइल सपोर्ट के लिए
+        tempInput.setSelectionRange(0, 99999);
         document.execCommand('copy');
         document.body.removeChild(tempInput);
         showSuccess();
@@ -320,6 +350,7 @@ window.shareProduct = async function() {
         showError();
     }
 };
+
 
 
 
@@ -655,32 +686,7 @@ function setupWhatsAppCheckout() {
 
     checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) return;
-
-        let total = 0;
-        let message = `🏷️ *SHHUTUP™ — New Order*\n━━━━━━━━━━━━━━━━\n\n`;
-
-        cart.forEach((item, index) => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            message += `${index + 1}. *${item.name}*\n   Qty: ${item.quantity} × ${formatINR(item.price)} = ${formatINR(itemTotal)}\n\n`;
-        });
-
-        message += `━━━━━━━━━━━━━━━━\n`;
-        message += `💰 *Total:* ${formatINR(total)}\n`;
-        message += `🚚 *Shipping:* FREE\n`;
-        message += `━━━━━━━━━━━━━━━━\n\n`;
-
-        const savedEmail = localStorage.getItem('shhutup_user_email');
-        if (savedEmail) {
-            message += `📧 *Customer Email:* ${savedEmail}\n\n`;
-        }
-
-        message += `📍 Please share your delivery address to proceed.`;
-
-        // डायनामिक व्हाट्सएप नंबर फेच करें
-        const dynamicNumber = localStorage.getItem('shhutup_wa_number') || '917903698180';
-        
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/${dynamicNumber}?text=${encodedMessage}`, '_blank');
+        localStorage.removeItem('shhutup_applied_coupon'); // डायरेक्ट बाय में कूपन नहीं है
+        window.location.href = 'checkout.html';
     });
 }
